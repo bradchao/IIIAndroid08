@@ -1,8 +1,12 @@
 package tw.org.iii.iiiandroid08;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +28,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,},
+                    9487);
+        }else{
+            init();
+        }
+    }
+
+
+    private void init(){
         content = findViewById(R.id.content);
         sp = getSharedPreferences("brad", MODE_PRIVATE);
         editor = sp.edit();
@@ -59,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
     public void test4(View view) {
         try (FileInputStream fin = openFileInput("brad.txt")){
             StringBuffer sb = new StringBuffer();
-            int c;
-            while ((c = fin.read()) != -1){
-                sb.append((char)c);
+            byte[] buf = new byte[1024]; int len;
+            while ((len = fin.read(buf)) != -1){
+                sb.append(new String(buf,0,len));
             }
             content.setText(sb.toString());
         }catch (Exception e){
