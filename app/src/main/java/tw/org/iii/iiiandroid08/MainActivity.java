@@ -9,11 +9,13 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private TextView content;
+    private File sdroot, approot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
         content = findViewById(R.id.content);
         sp = getSharedPreferences("brad", MODE_PRIVATE);
         editor = sp.edit();
+
+        sdroot = Environment.getExternalStorageDirectory();
+        Log.v("brad", sdroot.getAbsolutePath());
+
+        approot = new File(sdroot, "Android/data/"+getPackageName());
+        if (!approot.exists()){
+            approot.mkdirs();
+        }
+
     }
 
     public void test1(View view) {
@@ -100,5 +112,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void test5(View view) {
+        File file1 = new File(sdroot, "brad.ok");
+        try {
+            FileOutputStream fout =
+                    new FileOutputStream(file1);
+            fout.write("Hello, Brad".getBytes());
+            fout.flush();
+            fout.close();
+            Toast.makeText(this, "Save OK1",
+                    Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Log.v("brad", e.toString());
+        }
+    }
+    public void test6(View view) {
+        File file1 = new File(approot, "brad.ok");
+        try {
+            FileOutputStream fout =
+                    new FileOutputStream(file1);
+            fout.write("Hello, Brad".getBytes());
+            fout.flush();
+            fout.close();
+            Toast.makeText(this, "Save OK1",
+                    Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Log.v("brad", e.toString());
+        }
     }
 }
