@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
@@ -153,5 +154,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Query
     public void test7(View view) {
+        // select * from cust where ... group by.... having... order by...
+        Cursor c = db.query("user", null,null,
+                null,null,null, null);
+        while (c.moveToNext()){
+            String data = c.getString(1);
+            Log.v("brad", data);
+        }
     }
 }
