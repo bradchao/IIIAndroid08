@@ -178,4 +178,21 @@ public class MainActivity extends AppCompatActivity {
 
         test7(null);
     }
+
+    public void test9(View view) {
+        // delete from user where id = 2 and username='brad'
+        db.delete("user", "id = ? and username = ? ", new String[]{"3","brad"});
+        test7(null);
+    }
+    public void test10(View view) {
+        // update user set username='peter', tel='0912-123456' where id = 4;
+        ContentValues values = new ContentValues();
+        values.put("username", "peter");
+        values.put("tel", "0912-123456");
+        db.update("user", values, "id = ?", new String[]{"4"});
+        test7(null);
+    }
+
+
+
 }

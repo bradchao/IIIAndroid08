@@ -56,6 +56,18 @@
         android:onClick="test8"
         android:text="insert"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test9"
+        android:text="delete"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test10"
+        android:text="update"
+        />
 
 
     <TextView
