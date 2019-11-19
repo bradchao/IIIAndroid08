@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private TextView content;
     private File sdroot, approot;
+
+    private MyDBHelper myDBHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
         if (!approot.exists()){
             approot.mkdirs();
         }
+
+        myDBHelper = new MyDBHelper(this, "mydb", null, 1);
+        db = myDBHelper.getReadableDatabase();
+
 
     }
 
@@ -141,5 +149,9 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.v("brad", e.toString());
         }
+    }
+
+    // Query
+    public void test7(View view) {
     }
 }
