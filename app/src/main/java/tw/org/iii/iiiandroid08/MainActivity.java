@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -158,8 +159,23 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = db.query("user", null,null,
                 null,null,null, null);
         while (c.moveToNext()){
-            String data = c.getString(1);
-            Log.v("brad", data);
+            String id = c.getString(0);
+            String username = c.getString(1);
+            String tel = c.getString(2);
+            String birthday = c.getString(3);
+            Log.v("brad", id + ":" + username + ":" + tel + ":" + birthday);
         }
+    }
+
+    public void test8(View view) {
+        // String sql = "insert into user  (username, tel, birthday) values (''aa,''bb,'cc')";
+        //  db.execute(sql);
+        ContentValues values = new ContentValues();
+        values.put("username", "brad");
+        values.put("tel", "1234567");
+        values.put("birthday", "2000-01-02");
+        db.insert("user", null, values);
+
+        test7(null);
     }
 }

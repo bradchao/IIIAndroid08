@@ -50,6 +50,12 @@
         android:onClick="test7"
         android:text="query"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="test8"
+        android:text="insert"
+        />
 
 
     <TextView
